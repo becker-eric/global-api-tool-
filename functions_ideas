@@ -1,0 +1,36 @@
+api_client.py
+
+    fetch_json(url)
+    Fetches JSON from a URL and converts it into a Python dictionary. If the internet is down, the API returns an error, or the JSON is broken, it returns None so the program does not crash.
+
+    get_timezone(city, country_code)
+    Asks the Open-Meteo geocoding API for the city and returns the time zone, for example "Europe/Berlin". The user only enters city and country; coordinates stay hidden internally.
+
+    get_holidays(country_code, year)
+    Asks the Nager.Date API for public holidays in a country for a given year and returns a list of date strings. Used to exclude days from planning.
+
+main.py
+
+    main()
+    Starts the program, calls all other functions in the right order, and displays the result. Lives behind the if __name__ == "__main__": guard.
+
+    ask_input()
+    Prompts the user for all inputs like country, city, date, and blocked times, and stores everything in a dictionary. Ensures the data is available consistently throughout the program.
+
+    parse_slots(raw_slots)
+    Takes the raw blocked-time strings from the user and splits them into usable parts like date, start time, and end time. This allows later calculations instead of working with plain text.
+
+    to_utc(local_datetime, timezone)
+    Converts a local date and time with a time zone into UTC so both people become comparable. UTC is the common language for comparing times across time zones.
+
+    is_free(utc_time, blocked_slots_utc)
+    Checks whether a given UTC moment falls inside a blocked window. Returns True if the slot is free and False if it is occupied.
+
+    find_common_slots(date, tz_a, tz_b, busy_a, busy_b, holidays)
+    Steps through possible meeting times and finds hours where both people are working and not blocked. Holidays are filtered out too.
+
+    format_output(slot, tz_a, tz_b)
+    Takes a found UTC meeting slot and writes it so both users see their local time. For example: "09:00 Berlin / 02:00 Chicago".
+
+    save_result(result, filename)
+    Writes the final result to a file, for example as text or JSON. This keeps the result saved after the program ends.
