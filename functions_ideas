@@ -20,6 +20,9 @@ main.py
     parse_slots(raw_slots)
     Takes the raw blocked-time strings from the user and splits them into usable parts like date, start time, and end time. This allows later calculations instead of working with plain text.
 
+    get_planning_window(starttime)
+    This function checks if the start date is still early enough in the week and, if yes, returns a list of dates from that day up to and including Friday. If the date is Friday, Saturday, or Sunday, it returns None and the program can tell the user to try again next week.
+
     to_utc(local_datetime, timezone)
     Converts a local date and time with a time zone into UTC so both people become comparable. UTC is the common language for comparing times across time zones.
 
