@@ -14,7 +14,6 @@ def change_timezone(date_str, time_str, timezone_str):
     local_dt = local_dt.replace(tzinfo=ZoneInfo(timezone_str))
     return local_dt.astimezone(timezone.utc)
 
-
 def check_holiday(day, holidays):
     i = 0
     while i < len(holidays):
@@ -114,14 +113,20 @@ def format_and_save(slots, tz_a, tz_b, filename):
 
 print("Cross-border Meeting Planner")
 print("Country Codes: DE and US")
-
 own_country = input("Your country code: ").upper()
-print("For example Mainz")
 own_city = input("Your city: ")
 other_country = input("Other country code: ").upper()
-print("For example Chicago")
 other_city = input("Other city: ")
+
 start_date = input("Start date (yyyy-mm-dd): ")
+
+while True:
+    try:
+        datetime.strptime(start_date, "%Y-%m-%d")
+        break
+    except ValueError:
+        print("Invalid date. Please use yyyy-mm-dd.")
+        start_date = input("Start date (yyyy-mm-dd): ")
 
 tz_a = get_timezone(own_city, own_country)
 tz_b = get_timezone(other_city, other_country)
